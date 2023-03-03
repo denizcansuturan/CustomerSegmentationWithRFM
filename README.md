@@ -20,3 +20,5 @@ Dataset includes the sales of a UK based online store from 01/12/2009 to 09/12/2
 - **Price**: Unit prices(GBP)
 - **Customer ID:** Unique number for each customer.
 - **Country:** Country the customer lives.
+
+[Medium Blog on this Problem](https://medium.com/@denizcansuturan)
