@@ -1,39 +1,6 @@
-###############################################################
-# Customer Segmentation with RFM
-###############################################################
-
-# 1. Business Problem
-# 2. Data Understanding
-# 3. Data Preparation
-# 4. Calculating RFM Metrics
-# 5. Calculating RFM Scores
-# 6. Creating & Analysing RFM Segments
-# 7. Functionalization
 
 ###############################################################
-# 1. Business Problem
-###############################################################
-
-# An e-commerce company divides its customers into segments and
-# wants to define marketing strategies according to these segments.
-
-# Dataset includes the sales of a UK based online store
-# from 01/12/2009 to 09/12/2011.
-
-# Variables
-#
-# Invoice: Unique number for every transaction. Invoices that start with C are cancelled transactions.
-# StockCode: Unique number for every product.
-# Description: Product name.
-# Quantity: Number of specific product that has been ordered in an invoice.
-# InvoiceDate: Invoice date including the time.
-# Price: Unit prices(GBP)
-# CustomerID: Unique number for each customer.
-# Country: Country the customer lives.
-
-
-###############################################################
-# 2. Data Understanding
+# 1. Data Understanding
 ###############################################################
 
 import datetime as dt
@@ -43,7 +10,7 @@ pd.set_option('display.max_columns', None)
 # pd.set_option('display.max_rows', None)
 pd.set_option('display.float_format', lambda x: '%.3f' % x)
 
-df_ = pd.read_excel("D:/MIUUL/CRM/crmAnalytics/rfm/online_retail_II.xlsx", sheet_name="Year 2010-2011")
+df_ = pd.read_excel("location", sheet_name="Year 2010-2011")
 df = df_.copy()  # It takes time to read the file,thus a copy is taken after reading the file
 # so we do not have to read the file and have to wait repeatedly.
 df.head()
@@ -70,7 +37,7 @@ df.groupby("Invoice").agg({"TotalPrice": "sum"}).head()
 
 
 ###############################################################
-# 3. Data Preparation
+# 2. Data Preparation
 ###############################################################
 
 df.shape  # To observe the reducing number of rows as we make adjustments
@@ -89,7 +56,7 @@ df = df[~df["Invoice"].str.contains("C", na=False)]
 # ~ means except this
 
 ###############################################################
-# 4. Calculating RFM Metrics
+# 3. Calculating RFM Metrics
 ###############################################################
 
 # Recency, Frequency, Monetary
@@ -124,7 +91,7 @@ rfm.shape
 
 
 ###############################################################
-# 5. Calculating RFM Scores
+# 4. Calculating RFM Scores
 ###############################################################
 
 rfm["recency_score"] = pd.qcut(rfm['recency'], 5, labels=[5, 4, 3, 2, 1])
@@ -155,7 +122,7 @@ rfm[rfm["RFM_SCORE"] == "11"]
 # hibernating
 
 ###############################################################
-# 6. Creating & Analysing RFM Segments
+# 5. Creating & Analysing RFM Segments
 ###############################################################
 # regex
 # RFM Naming (Pattern Matching)
@@ -194,7 +161,7 @@ rfm.to_csv("rfm.csv")
 #  Segment information is extracted into an excel file.
 
 ###############################################################
-# 7. Functionalization
+# 6. Functionalization
 ###############################################################
 # Clean version of all the code has been written above:
 
@@ -249,7 +216,7 @@ def create_rfm(dataframe, csv=False):
 
 #  Since we have a function for RFM analysis, we can analyze Year 2009-2010 easily
 
-df2_ = pd.read_excel("D:/MIUUL/CRM/crmAnalytics/rfm/online_retail_II.xlsx", sheet_name="Year 2009-2010")
+df2_ = pd.read_excel("location", sheet_name="Year 2009-2010")
 df2 = df2_.copy()
 
 rfm_new = create_rfm(df2, csv=True)
